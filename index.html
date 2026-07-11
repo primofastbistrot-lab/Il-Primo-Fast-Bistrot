@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-    
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Primo - FastBistrot</title>
+    <title>Il Primo — Fast Bistrot | Maglie</title>
+    <meta name="description"
+        content="Il Primo Fast Bistrot a Maglie: pasta fresca fatta a mano, ricette romane e piatti salentini, servita veloce. Piazza Mercato 16, Maglie.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-
-       
         @font-face {
-    font-family: 'Caroline'; 
+            font-family: 'Caroline';
+            src: url(Font/Caroline.otf) format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-    src: url(Font/Caroline.otf) format('opentype'); 
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    font-family: 'Caroline', sans-serif;
-}
         * {
             margin: 0;
             padding: 0;
@@ -28,1095 +29,1467 @@ body {
         }
 
         :root {
-            --primary-color: #a89808;
-            --secondary-color: rgba(255, 255, 255, 0.575);
-            --text-dark: #ffffff;
-            --text-light: #ffffff;
-            --accent-gold: #d4af37;
+            /* Colore — dall'insegna reale: rame, foglia oro, luce calda su pietra leccese */
+            --stone: #efe6d3;
+            --stone-deep: #e4d6b8;
+            --ink: #221b14;
+            --ink-soft: #3a3025;
+            --copper: #a85c34;
+            --copper-dark: #8a4926;
+            --gold: #c69a46;
+            --terracotta: #b8492e;
+            --cream: #f8f1e2;
+
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-script: 'Caroline', cursive;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
+            font-family: var(--font-body);
+            line-height: 1.65;
+            color: var(--ink);
+            background: var(--stone);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Navigation */
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .icon-mark {
+            display: inline-block;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ---------- Layout helpers ---------- */
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-light {
+            background: var(--stone);
+        }
+
+        .section-deep {
+            background: var(--stone-deep);
+        }
+
+        .section-dark {
+            background: var(--ink);
+            color: var(--cream);
+        }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--copper);
+        }
+
+        .section-dark .eyebrow {
+            color: var(--gold);
+        }
+
+        .section-heading {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            line-height: 1.15;
+            margin: 0.6rem 0 0;
+            letter-spacing: -0.01em;
+        }
+
+        .section-head {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .divider-mark {
+            width: 46px;
+            height: 46px;
+            margin: 1.1rem auto 0;
+            color: var(--gold);
+            opacity: 0.9;
+        }
+
+        /* ---------- Navigation ---------- */
         nav {
-            background: rgb(0, 0, 0);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(34, 27, 20, 0.92);
+            backdrop-filter: blur(6px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(198, 154, 70, 0.25);
+            transition: box-shadow 0.3s;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1180px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.9rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1.5rem;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
             text-decoration: none;
+            color: var(--cream);
+        }
+
+        .logo .icon-mark {
+            width: 30px;
+            height: 30px;
+            color: var(--gold);
+        }
+
+        .logo-word {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.1rem;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--cream);
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.3s;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.25s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.25s;
         }
 
         .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .btn-reserve {
-            background: var(--primary-color);
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 5px;
+            background: var(--copper);
+            color: var(--cream);
+            padding: 0.65rem 1.4rem;
+            border-radius: 3px;
             text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: background 0.25s, transform 0.25s;
+            white-space: nowrap;
         }
 
         .btn-reserve:hover {
-            background: #000000;
+            background: var(--terracotta);
+            transform: translateY(-2px);
         }
 
-        /* Hero Section */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        .nav-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--cream);
+            transition: transform 0.25s, opacity 0.25s;
+        }
+
+        /* ---------- Hero ---------- */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('Immagini/Sfondo.png');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
+            position: relative;
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            margin-top: 60px;
+            align-items: flex-end;
+            padding-bottom: 6.5rem;
+            color: var(--cream);
+            overflow: hidden;
         }
 
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        .hero-media {
+            position: absolute;
+            inset: 0;
+            background: url('Immagini/Sfondo.png') center 30%/cover no-repeat;
         }
 
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+        .hero-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(34, 27, 20, 0.35) 0%, rgba(34, 27, 20, 0.55) 45%, var(--ink) 96%),
+                linear-gradient(90deg, rgba(34, 27, 20, 0.55) 0%, rgba(34, 27, 20, 0.1) 45%);
+        }
+
+        .hero-fork {
+            position: absolute;
+            top: 12%;
+            right: 4%;
+            width: min(30vw, 320px);
+            height: min(30vw, 320px);
+            color: var(--gold);
+            opacity: 0.16;
+            stroke-width: 2;
+            animation: twirl 26s linear infinite;
+        }
+
+        @keyframes twirl {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0;
+            animation: rise 0.7s ease-out 0.15s forwards;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(3.2rem, 9vw, 6.4rem);
+            line-height: 0.98;
+            margin: 0.5rem 0 0;
+            opacity: 0;
+            animation: rise 0.8s ease-out 0.35s forwards;
+        }
+
+        .hero-script {
+            font-family: var(--font-script);
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: var(--gold);
+            margin-top: -0.3rem;
+            opacity: 0;
+            animation: rise 0.8s ease-out 0.55s forwards;
+        }
+
+        .hero-tagline {
+            font-size: 1.15rem;
+            max-width: 480px;
+            margin-top: 1.4rem;
+            color: rgba(248, 241, 226, 0.86);
+            opacity: 0;
+            animation: rise 0.8s ease-out 0.75s forwards;
+        }
+
+        .hero-actions {
+            margin-top: 2.2rem;
+            opacity: 0;
+            animation: rise 0.8s ease-out 0.95s forwards;
         }
 
         .hero-btn {
-            background: var(--primary-color);
-            color: rgb(255, 255, 255);
-            padding: 1rem 2.5rem;
-            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--copper);
+            color: var(--cream);
+            padding: 1rem 1.8rem;
+            border-radius: 3px;
             text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: transform 0.3s;
-            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 1px dashed rgba(248, 241, 226, 0.5);
+            transition: transform 0.3s, background 0.3s;
         }
 
         .hero-btn:hover {
+            background: var(--terracotta);
             transform: translateY(-3px);
         }
 
-        /* Sections */
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;           /* Impostazioni Mini Titoli */
-            color:  black;                 
+        @media (prefers-reduced-motion: reduce) {
+
+            .hero-eyebrow,
+            .hero-title,
+            .hero-script,
+            .hero-tagline,
+            .hero-actions {
+                animation: none;
+                opacity: 1;
+            }
+
+            .hero-fork {
+                animation: none;
+            }
         }
 
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 3px;
-            background: var(--primary-color);
-            margin: 1rem auto;
-        }
-
-        /* About Section */
+        /* ---------- About ---------- */
         .about-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
             align-items: center;
         }
 
         .about-text p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            color: var(--text-light);
+            font-size: 1.08rem;
+            color: var(--ink-soft);
         }
 
-        .about-image {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.185);
+        .about-body::first-letter {
+            font-family: var(--font-display);
+            font-size: 3.4rem;
+            font-weight: 600;
+            color: var(--copper);
+            float: left;
+            line-height: 0.8;
+            margin: 0.1rem 0.5rem 0 0;
         }
 
-        .about-image img {
+        .about-frame {
+            position: relative;
+            padding: 1.2rem;
+        }
+
+        .about-frame img {
             width: 100%;
             height: auto;
-            display: block;
+            border-radius: 4px;
+            transform: rotate(-1.4deg);
+            box-shadow:
+                0 0 0 1px rgba(198, 154, 70, 0.35),
+                0 25px 50px -15px rgba(34, 27, 20, 0.55),
+                0 0 60px -10px rgba(198, 154, 70, 0.35);
         }
 
-        /* Menu Section */
+        .about-caption {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--copper);
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+
+        /* ---------- Menu ---------- */
         .menu-section {
-            background: var(--secondary-color);
+            background: var(--ink);
+            color: var(--cream);
         }
 
         .menu-categories {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
+            gap: 0.6rem;
+            margin-bottom: 3.5rem;
             flex-wrap: wrap;
         }
 
         .category-btn {
-            padding: 0.8rem 1.5rem;
-            border: 2px solid var(--primary-color);
+            padding: 0.6rem 1.2rem;
+            border: 1px solid rgba(198, 154, 70, 0.4);
             background: transparent;
-            color: var(--primary-color);
-            border-radius: 5px;
+            color: rgba(248, 241, 226, 0.75);
+            border-radius: 999px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: all 0.25s;
         }
 
         .category-btn.active,
         .category-btn:hover {
-            background: var(--primary-color);
-            color: white;
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--ink);
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
         .menu-item {
-            background: rgb(0, 0, 0);
-            border-radius: 10px;
+            background: var(--cream);
+            color: var(--ink);
+            border-radius: 2px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            clip-path: polygon(0.0% 0%, 3.57% 2.6%, 7.14% 0%, 10.71% 2.6%, 14.29% 0%, 17.86% 2.6%, 21.43% 0%, 25.0% 2.6%, 28.57% 0%, 32.14% 2.6%, 35.71% 0%, 39.29% 2.6%, 42.86% 0%, 46.43% 2.6%, 50.0% 0%, 53.57% 2.6%, 57.14% 0%, 60.71% 2.6%, 64.29% 0%, 67.86% 2.6%, 71.43% 0%, 75.0% 2.6%, 78.57% 0%, 82.14% 2.6%, 85.71% 0%, 89.29% 2.6%, 92.86% 0%, 96.43% 2.6%, 100.0% 0%, 100% 100%, 0% 100%);
         }
 
         .menu-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px) rotate(-0.3deg);
+            box-shadow: 0 18px 34px -12px rgba(0, 0, 0, 0.6);
         }
 
         .menu-item img {
             width: 100%;
-            height: 200px;
+            height: 190px;
             object-fit: cover;
         }
 
         .menu-item-content {
-            padding: 1.5rem;
+            padding: 1.4rem 1.4rem 1.2rem;
+        }
+
+        .menu-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.6rem;
         }
 
         .menu-item h3 {
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--ink);
         }
 
-        .menu-item p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+        .menu-item p.menu-desc {
+            color: var(--ink-soft);
+            margin: 0.5rem 0 0;
+            font-size: 0.92rem;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.1rem;
+            padding-top: 0.9rem;
+            border-top: 1.5px dashed rgba(168, 92, 52, 0.4);
+        }
+
+        .menu-allergen {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.03em;
+            color: var(--copper-dark);
+            background: rgba(168, 92, 52, 0.1);
+            padding: 0.25rem 0.55rem;
+            border-radius: 999px;
         }
 
         .menu-price {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.3rem;
+            font-family: var(--font-mono);
+            color: var(--terracotta);
+            font-weight: 700;
+            font-size: 1.15rem;
         }
 
-        /* Reservation Section */
-        .reservation-section {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            max-width: 100%;
+        /* Allergeni */
+        .allergen-notice {
+            margin-top: 4rem;
+            padding: 2.2rem;
+            background: var(--ink-soft);
+            border-radius: 6px;
+            border: 1px solid rgba(198, 154, 70, 0.3);
         }
 
-        .reservation-section .section-title {
-            color: white;
+        .allergen-notice p {
+            color: rgba(248, 241, 226, 0.85);
+            font-size: 0.92rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.55;
         }
 
-        .reservation-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        .allergen-notice p strong {
+            color: var(--gold);
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .allergen-table {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-            font-size: 1rem;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
+        .allergen-table td {
+            border: 1px solid rgba(198, 154, 70, 0.3);
+            padding: 0.8rem 1rem;
+            color: rgba(248, 241, 226, 0.85);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            text-align: left;
+            background: rgba(198, 154, 70, 0.06);
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--primary-color);
-            color: rgb(0, 0, 0);
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
+        .allergen-footer-text {
+            text-align: center;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 1.2rem;
+            font-size: 0.92rem;
         }
 
-        .submit-btn:hover {
-            background: #a00d25;
+        @media (max-width: 600px) {
+            .allergen-table td {
+                font-size: 0.78rem;
+                padding: 0.6rem;
+            }
         }
 
-        /* Gallery Section */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .gallery-item {
-            border-radius: 10px;
-            overflow: hidden;
-            height: 250px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Contact Section */
+        /* ---------- Contact ---------- */
         .contact-container {
-            color:black;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 3.5rem;
         }
 
         .contact-info div {
-            color:black;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.6rem;
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .contact-info i {
-            color:black;
-            font-size: 1.5rem;
-            color: var(--primary-color);
+        .contact-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--copper);
+            color: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .contact-info p {
+            font-size: 1.02rem;
+            color: var(--ink-soft);
         }
 
         .social-links {
             display: flex;
+            align-items: center;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 0.6rem;
         }
 
         .social-links a {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: var(--primary-color); /* Colore cerchio*/
-            color: black;
+            background: var(--copper);
+            color: var(--cream);
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            font-size: 1.2rem;
-            transition: transform 0.3s;
+            font-size: 1.1rem;
+            transition: transform 0.25s, background 0.25s;
+            flex-shrink: 0;
         }
 
         .social-links a:hover {
+            background: var(--terracotta);
             transform: translateY(-3px);
         }
 
         .map {
-            border-radius: 10px;
+            border-radius: 6px;
             overflow: hidden;
-            height: 400px;
+            height: 380px;
+            border: 1px solid var(--stone-deep);
+            box-shadow: 0 15px 35px -15px rgba(34, 27, 20, 0.3);
         }
 
-        /* Footer */
+        /* ---------- Footer ---------- */
         footer {
-            background: var(--text-dark);
-            color: var(black);
-            padding: 3rem 2rem 1rem;
+            background: var(--ink);
+            color: var(--cream);
+            padding: 4rem 2rem 2rem;
             text-align: center;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1180px;
             margin: 0 auto;
         }
 
+        .footer-mark {
+            width: 40px;
+            height: 40px;
+            color: var(--gold);
+            margin: 0 auto 1rem;
+        }
+
         .footer-logo {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+            font-family: var(--font-display);
+            font-size: 1.9rem;
+            font-weight: 600;
+        }
+
+        .footer-script {
+            font-family: var(--font-script);
+            color: var(--gold);
+            font-size: 2.6rem;
+            margin-top: -0.4rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin: 2rem 0;
+            margin: 2.4rem 0 1.6rem;
             flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: black;
+            color: var(--cream);
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.25s;
         }
 
         .footer-links a:hover {
-            color: var(--primary-color);
+            color: var(--gold);
         }
 
         .copyright {
             margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #555;
-            color: #888;
+            padding-top: 1.6rem;
+            border-top: 1px solid rgba(198, 154, 70, 0.2);
+            color: rgba(248, 241, 226, 0.55);
+            font-size: 0.82rem;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-content,
-            .contact-container {
+        /* ---------- Responsive ---------- */
+        @media (max-width: 860px) {
+            .about-content {
                 grid-template-columns: 1fr;
             }
 
-            .section-title {
-                
-                font-size: 2rem;
+            .contact-container {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Cookie Banner */
-.cookie-banner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgb(0, 0, 0);
-    color: #ffffff;
-    padding: 1.2rem 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    z-index: 2000;
-    box-shadow: 0 -2px 15px rgba(0,0,0,0.3);
-    border-top: 2px solid var(--primary-color);
-    transform: translateY(100%);
-    transition: transform 0.4s ease;
-}
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(34, 27, 20, 0.98);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1.3rem;
+                display: none;
+                border-bottom: 1px solid rgba(198, 154, 70, 0.25);
+            }
 
-.cookie-banner.show {
-    transform: translateY(0);
-}
+            .nav-links.open {
+                display: flex;
+            }
 
-.cookie-banner p {
-    flex: 1;
-    min-width: 250px;
-    font-size: 0.95rem;
-    margin: 0;
-}
+            .nav-toggle {
+                display: flex;
+            }
 
-.cookie-banner a {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
+            .btn-reserve {
+                display: none;
+            }
 
-.cookie-banner-buttons {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-}
+            .logo-word {
+                font-size: 1.15rem;
+            }
 
-.cookie-btn {
-    padding: 0.6rem 1.4rem;
-    border-radius: 5px;
-    border: 2px solid var(--primary-color);
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.3s, color 0.3s;
-}
+            .section {
+                padding: 4.5rem 0;
+            }
 
-.cookie-btn-accept {
-    background: var(--primary-color);
-    color: #000;
-}
+            .hero {
+                padding-bottom: 4rem;
+            }
+        }
 
-.cookie-btn-accept:hover {
-    background: #ffffff;
-    color: #000;
-}
+        /* ---------- Cookie Banner ---------- */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--ink);
+            color: var(--cream);
+            padding: 1.2rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            z-index: 2000;
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.35);
+            border-top: 2px solid var(--gold);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
 
-.cookie-btn-decline {
-    background: transparent;
-    color: #ffffff;
-}
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
 
-.cookie-btn-decline:hover {
-    background: rgba(255,255,255,0.1);
-}
+        .cookie-banner p {
+            flex: 1;
+            min-width: 250px;
+            font-size: 0.9rem;
+            margin: 0;
+            color: rgba(248, 241, 226, 0.85);
+        }
 
-@media (max-width: 600px) {
-    .cookie-banner {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-    }
-    .cookie-banner-buttons {
-        width: 100%;
-        justify-content: flex-start;
-    }
-}
+        .cookie-banner a {
+            color: var(--gold);
+            text-decoration: underline;
+        }
 
-/* Allergeni Section */
-.allergen-notice {
-    margin-top: 3rem;
-    padding: 2rem;
-    background: rgb(0, 0, 0);
-    border-radius: 10px;
-    border: 1px solid var(--primary-color);
-}
+        .cookie-btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 3px;
+            border: 1px solid var(--gold);
+            background: var(--gold);
+            color: var(--ink);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.25s, color 0.25s;
+        }
 
-.allergen-notice p {
-    color: #ffffff;
-    font-size: 0.95rem;
-    margin-bottom: 0.8rem;
-    line-height: 1.5;
-}
+        .cookie-btn:hover {
+            background: transparent;
+            color: var(--gold);
+        }
 
-.allergen-notice p strong {
-    color: var(--primary-color);
-}
+        @media (max-width: 600px) {
+            .cookie-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
 
-.allergen-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.5rem 0;
-}
-
-.allergen-table td {
-    border: 1px solid var(--primary-color);
-    padding: 0.9rem 1rem;
-    color: #ffffff;
-    font-size: 0.9rem;
-    text-align: center;
-    background: rgba(168, 152, 8, 0.08);
-}
-
-.allergen-footer-text {
-    text-align: center;
-    color: var(--primary-color);
-    font-weight: bold;
-    text-decoration: underline;
-    margin-top: 1rem;
-}
-
-@media (max-width: 600px) {
-    .allergen-table td {
-        font-size: 0.8rem;
-        padding: 0.6rem;
-    }
-}
+        /* Focus visibility */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
+        }
     </style>
 </head>
+
 <body>
+
+    <!-- Reusable fork & twirl mark, drawn from the studio's own copper plaque signage -->
+    <svg width="0" height="0" style="position:absolute">
+        <symbol id="fork-twirl" viewBox="0 0 100 100">
+            <path
+                d="M 59.36 39.33 L 60.23 39.61 L 61.04 40.18 L 61.69 41.02 L 62.09 42.08 L 62.16 43.29 L 61.87 44.54 L 61.2 45.72 L 60.16 46.7 L 58.82 47.38 L 57.26 47.67 L 55.61 47.49 L 54.02 46.83 L 52.61 45.69 L 51.54 44.15 L 50.93 42.29 L 50.86 40.26 L 51.38 38.22 L 52.5 36.34 L 54.15 34.8 L 56.23 33.75 L 58.59 33.31 L 61.06 33.56 L 63.44 34.52 L 65.51 36.14 L 67.09 38.35 L 68.01 40.97 L 68.17 43.83 L 67.52 46.69 L 66.05 49.32 L 63.86 51.49 L 61.08 53.0 L 57.92 53.7 L 54.61 53.48 L 51.43 52.32 L 48.63 50.29 L 46.46 47.49 L 45.12 44.13 L 44.76 40.46 L 45.46 36.75 L 47.18 33.32 L 49.84 30.45 L 53.27 28.39 L 57.2 27.34 L 61.34 27.42 L 65.37 28.68 L 68.96 31.04" />
+            <path d="M63.8 28 L74.2 34 M63.8 28 L74.8 8.9 M69 31 L80 11.9 M74.2 34 L85.2 14.9" />
+            <path d="M59.36 39.33 C 48 46 36 47 27 55 C 20 61 14 58 14 51 C 14 45 20 43 25 47" />
+        </symbol>
+    </svg>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo">Il Primo</a>
-            <ul class="nav-links">
+            <a href="#home" class="logo">
+                <svg class="icon-mark">
+                    <use href="#fork-twirl"></use>
+                </svg>
+                <span class="logo-word">Il Primo</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">Chi Siamo</a></li>
                 <li><a href="#menu">Menu</a></li>
-                      <!-- Last Gallery  --> 
                 <li><a href="#contact">Contatti</a></li>
             </ul>
             <a href="#menu" class="btn-reserve">Ordina Ora</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Apri il menu di navigazione" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <div class="hero" id="home">
-        <div class="hero-content">
-            <h1 style= "  position: relative; top: -150px; left: 0;">Benvenuti da:</h1> 
-            <h1 style= "  position: relative; top: -150px; left: 0;">Il Primo</h1>
-            <p style= "font-family: 'Caroline' ;position: relative; top: -150px; left: 0; font-size: 60px;">Fast Bistrot</p>                             
-            <a href="#menu" class="hero-btn">Ordina il tuo Primo</a>
+        <div class="hero-media">
+            <svg class="icon-mark hero-fork" viewBox="0 0 100 100" aria-hidden="true">
+                <use href="#fork-twirl"></use>
+            </svg>
+        </div>
+        <div class="wrap hero-content">
+            <p class="hero-eyebrow">Maglie · Salento</p>
+            <h1 class="hero-title">Il Primo</h1>
+            <p class="hero-script">Fast Bistrot</p>
+            <p class="hero-tagline">Pasta fresca tirata a mano ogni giorno, ricette romane e sapori salentini, servita
+                veloce senza perdere il gusto di una volta.</p>
+            <div class="hero-actions">
+                <a href="#menu" class="hero-btn">Ordina il tuo Primo →</a>
+            </div>
         </div>
     </div>
 
     <!-- About Section -->
-    <section id="about">
-        <h2 class="section-title">Chi Siamo</h2>
-        <div class="about-content">
+    <section id="about" class="section section-light">
+        <div class="wrap about-content">
             <div class="about-text">
-                <p style = "color: black; font-family:Georgia, 'Times New Roman', Times, serif ; font-size: 25px"> Il Primo, non un ristorante e non un bistrot ma qualcosa di più informale, dove l'amore per la cucina ci ha portato a lanciarci in quest'avventura dopo molti anni passati a fare esperienza, quell'esperienza che adesso vogliamo mettere a vostra disposizione per farvi gustare ricette tipiche della nostra e anche delle altre regioni italiane, con un attenzione particolare al seguire la stagionalità e la qualità dei prodotti che offriamo, non vi resta altro che accomodarvi e buon appetito</p>
+                <p class="eyebrow">Chi siamo</p>
+                <h2 class="section-heading" style="margin-bottom:1.5rem;">Non un ristorante, non un bistrot</h2>
+                <p class="about-body">Il Primo, non un ristorante e non un bistrot ma qualcosa di più informale, dove
+                    l'amore per la cucina ci ha portato a lanciarci in quest'avventura dopo molti anni passati a fare
+                    esperienza, quell'esperienza che adesso vogliamo mettere a vostra disposizione per farvi gustare
+                    ricette tipiche della nostra e anche delle altre regioni italiane, con un'attenzione particolare al
+                    seguire la stagionalità e la qualità dei prodotti che offriamo, non vi resta altro che accomodarvi e
+                    buon appetito.</p>
             </div>
-            <div class="about-image">
-                <img src="Immagini/Logo.png">                 
+            <div>
+                <div class="about-frame">
+                    <img src="Immagini/Logo.png"
+                        alt="L'insegna in rame di Il Primo Fast Bistrot, illuminata su pietra leccese">
+                </div>
+                <p class="about-caption">Piazza Mercato 16 — l'insegna del Primo</p>
             </div>
         </div>
-
-
-
-
-
-
-
     </section>
 
     <!-- Menu Section -->
-    <section id="menu" class="menu-section">
-        <h2 class="section-title">Il Nostro Menu</h2>
-        
-        <div class="menu-categories">
-            <button class="category-btn active" data-category="all">Tutti</button>
-            <button class="category-btn" data-category="primi">Primi Piatti</button>
-            <button class="category-btn" data-category="secondi">Secondi Piatti</button>
-            <button class="category-btn" data-category="sfizierie">Sfizierie</button>
-            <button class="category-btn" data-category="bevande">Bevande</button>
-            <button class="category-btn" data-category="birre">Birre</button>
-            <button class="category-btn" data-category="cocktail">Cocktail</button>
+    <section id="menu" class="section menu-section">
+        <div class="wrap">
+            <div class="section-head">
+                <p class="eyebrow">La Comanda</p>
+                <h2 class="section-heading">Il Nostro Menu</h2>
+                <svg class="icon-mark divider-mark">
+                    <use href="#fork-twirl"></use>
+                </svg>
+            </div>
+
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">Tutti</button>
+                <button class="category-btn" data-category="primi">Primi Piatti</button>
+                <button class="category-btn" data-category="secondi">Secondi Piatti</button>
+                <button class="category-btn" data-category="sfizierie">Sfizierie</button>
+                <button class="category-btn" data-category="bevande">Bevande</button>
+                <button class="category-btn" data-category="birre">Birre</button>
+                <button class="category-btn" data-category="cocktail">Cocktail</button>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-item" data-category="primi">
+                    <img src="Immagini/Carbonara.png" alt="Carbonara">
+                    <div class="menu-item-content">
+                        <h3>Carbonara</h3>
+                        <p class="menu-desc">Autentica carbonara romana con guanciale croccante, pecorino romano e uova
+                            fresche</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€13.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="primi">
+                    <img src="Immagini/CacioePepe.png" alt="Cacio e Pepe">
+                    <div class="menu-item-content">
+                        <h3>Cacio e Pepe</h3>
+                        <p class="menu-desc">L'intramontabile capolavoro della semplicità romana con pecorino romano DOP
+                            grattugiato al momento e pepe nero in grani tostato, legati in una crema perfetta.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€9.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="primi">
+                    <img src="Immagini/Gricia.jpg" alt="Gricia">
+                    <div class="menu-item-content">
+                        <h3>Gricia</h3>
+                        <p class="menu-desc">Il saggio preludio della tradizione romana con guanciale croccante,
+                            pecorino romano DOP e una generosa spolverata di pepe nero macinato fresco.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€11.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="primi">
+                    <img src="Immagini/Amatriciana.jpeg" alt="Amatriciana">
+                    <div class="menu-item-content">
+                        <h3>Amatriciana</h3>
+                        <p class="menu-desc">L'abbraccio intenso della cucina laziale con guanciale dorato, pomodoro San
+                            Marzano verace, pecorino romano e un pizzico di peperoncino.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€12.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="primi">
+                    <img src="Immagini/Ortolana.jpg" alt="Ortolana">
+                    <div class="menu-item-content">
+                        <h3>Ortolana</h3>
+                        <p class="menu-desc">Una sinfonia di colori e sapori dell'orto con verdure di stagione saltate,
+                            basilico fresco e un filo d'olio extravergine d'oliva a crudo.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3</span>
+                            <span class="menu-price">€11.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="primi">
+                    <img src="Immagini/Tricolore.jpeg" alt="Tricolore">
+                    <div class="menu-item-content">
+                        <h3>Tricolore</h3>
+                        <p class="menu-desc">L'omaggio mediterraneo ai sapori d'Italia con pomodorini dolci, mozzarella
+                            di bufala filante e profumato basilico fresco.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€11.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="secondi">
+                    <img src="Immagini/pezz.jpeg" alt="Pezzetti Pignata">
+                    <div class="menu-item-content">
+                        <h3>Pezzetti Pignata</h3>
+                        <p class="menu-desc">Il comfort food salentino per eccellenza con teneri bocconcini di carne di
+                            cavallo cotti lentamente nella terracotta, immersi in un sugo ricco e speziato.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1</span>
+                            <span class="menu-price">€13.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="secondi">
+                    <img src="Immagini/sals.jpg" alt="Salsiccia Arrosto con Patate al Forno">
+                    <div class="menu-item-content">
+                        <h3>Salsiccia Arrosto con Patate al Forno</h3>
+                        <p class="menu-desc">Un classico intramontabile della domenica con salsiccia di puro suino
+                            nostrana ben rosolata, accompagnata da patate al forno dorate e profumate al rosmarino.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Senza allergeni dichiarati</span>
+                            <span class="menu-price">€10.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="secondi">
+                    <img src="Immagini/salt.webp" alt="Saltimbocca">
+                    <div class="menu-item-content">
+                        <h3>Saltimbocca</h3>
+                        <p class="menu-desc">Teneri medaglioni di vitello che "saltano in bocca", impreziositi da sapida
+                            coppa o prosciutto crudo e foglioline di salvia fresca, sfumati al vino bianco.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·7</span>
+                            <span class="menu-price">€13.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="sfizierie">
+                    <img src="Immagini/Aperitivo.jpg" alt="Aperitivo Rinforzato">
+                    <div class="menu-item-content">
+                        <h3>Aperitivo Rinforzato</h3>
+                        <p class="menu-desc">Prosciutto Crudo, Capocollo, Salame Milano, Ventricina Piccante, Caciottina
+                            speziata, Mortadella, Pittole, Polpette, Panzerotti, Pitta di Patate.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·7</span>
+                            <span class="menu-price">€16.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="sfizierie">
+                    <img src="Immagini/Aperitivo.jpg" alt="Tagliere di Salumi e Formaggi">
+                    <div class="menu-item-content">
+                        <h3>Tagliere di Salumi e Formaggi</h3>
+                        <p class="menu-desc">Prosciutto Crudo, Salame Milano, Mortadella, Caciottina Speziata.</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·7</span>
+                            <span class="menu-price">€9.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="sfizierie">
+                    <img src="Immagini/polpette.webp" alt="Polpette">
+                    <div class="menu-item-content">
+                        <h3>Polpette 8pz</h3>
+                        <p class="menu-desc">Salse a scelta + €1.00 (opzionale)</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€5.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="sfizierie">
+                    <img src="Immagini/crocchetta.webp" alt="Panzerotti di Patate e Menta">
+                    <div class="menu-item-content">
+                        <h3>Panzerotti di Patate e Menta 10pz</h3>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1·3·7</span>
+                            <span class="menu-price">€5.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="sfizierie">
+                    <img src="Immagini/focaccia.png" alt="Focaccia del Giorno">
+                    <div class="menu-item-content">
+                        <h3>Focaccia del Giorno</h3>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1</span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="sfizierie">
+                    <img src="Immagini/pittole.webp" alt="Pittole Miste">
+                    <div class="menu-item-content">
+                        <h3>Pittole Miste</h3>
+                        <div class="menu-item-footer">
+                            <span class="menu-allergen">Allergeni 1</span>
+                            <span class="menu-price">€3.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/acq.jpg" alt="Acqua Naturale">
+                    <div class="menu-item-content">
+                        <h3>Acqua Naturale</h3>
+                        <p class="menu-desc">Bottiglia 0.5l</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€1.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/acq.jpg" alt="Acqua Frizzante">
+                    <div class="menu-item-content">
+                        <h3>Acqua Frizzante</h3>
+                        <p class="menu-desc">Bottiglia 0.5l</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€1.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/coca.jpg" alt="Coca Cola">
+                    <div class="menu-item-content">
+                        <h3>Coca Cola</h3>
+                        <p class="menu-desc">Lattina 330ml</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/cocaz.jpg" alt="Coca-Cola Zero">
+                    <div class="menu-item-content">
+                        <h3>Coca-Cola Zero</h3>
+                        <p class="menu-desc">Lattina 330ml</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/fanta.jpg" alt="Fanta">
+                    <div class="menu-item-content">
+                        <h3>Fanta</h3>
+                        <p class="menu-desc">Lattina 330ml</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/sprite.jpg" alt="Sprite">
+                    <div class="menu-item-content">
+                        <h3>Sprite</h3>
+                        <p class="menu-desc">Lattina 330ml</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/thel.jpg" alt="Thè Limone">
+                    <div class="menu-item-content">
+                        <h3>Thè Limone</h3>
+                        <p class="menu-desc">Lattina 330ml</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="bevande">
+                    <img src="Immagini/thep.jpg" alt="Thè Pesca">
+                    <div class="menu-item-content">
+                        <h3>Thè Pesca</h3>
+                        <p class="menu-desc">Lattina 330ml</p>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€2.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="birre">
+                    <img src="Immagini/Ichnusa.jpg" alt="Ichnusa">
+                    <div class="menu-item-content">
+                        <h3>Ichnusa</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€3.50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="birre">
+                    <img src="Immagini/Franziskaner.jpg" alt="Franziskaner">
+                    <div class="menu-item-content">
+                        <h3>Franziskaner</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€4.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="birre">
+                    <img src="Immagini/Menabrea.jpg" alt="Menabrea Doppio Malto">
+                    <div class="menu-item-content">
+                        <h3>Menabrea Doppio Malto</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€4.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="birre">
+                    <img src="Immagini/Menabrea.jpg" alt="Menabrea Rossa">
+                    <div class="menu-item-content">
+                        <h3>Menabrea Rossa</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€5.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="birre">
+                    <img src="Immagini/peroni.jpg" alt="Peroni Senza Glutine">
+                    <div class="menu-item-content">
+                        <h3>Peroni (Senza Glutine)</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€3.50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="cocktail">
+                    <img src="Immagini/aperol.jpg" alt="Aperol Spritz">
+                    <div class="menu-item-content">
+                        <h3>Aperol Spritz</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€6.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="cocktail">
+                    <img src="Immagini/campari.jpg" alt="Campari Spritz">
+                    <div class="menu-item-content">
+                        <h3>Campari Spritz</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€6.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="cocktail">
+                    <img src="Immagini/ginl.jpg" alt="Gin Lemon">
+                    <div class="menu-item-content">
+                        <h3>Gin Lemon</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€6.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="cocktail">
+                    <img src="Immagini/gint.jpg" alt="Gin Tonic">
+                    <div class="menu-item-content">
+                        <h3>Gin Tonic</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€6.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="cocktail">
+                    <img src="Immagini/vodkal.jpg" alt="Vodka Lemon">
+                    <div class="menu-item-content">
+                        <h3>Vodka Lemon</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€6.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="cocktail">
+                    <img src="Immagini/vodkat.jpg" alt="Vodka Tonic">
+                    <div class="menu-item-content">
+                        <h3>Vodka Tonic</h3>
+                        <div class="menu-item-footer">
+                            <span></span>
+                            <span class="menu-price">€6.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Allergeni -->
+            <div class="allergen-notice">
+                <p>Si avvisa la gentile clientela che negli alimenti e nelle bevande preparati e somministrati possono
+                    essere contenuti ingredienti o coadiuvanti considerati allergeni.</p>
+                <p>Elenco degli ingredienti allergenici utilizzati e presenti nell'allegato II del Reg. UE n. 1169/2001
+                    – <strong>"Sostanze o prodotti che provocano allergie o intolleranze"</strong></p>
+
+                <table class="allergen-table">
+                    <tr>
+                        <td>1) Cereali contenenti glutine e prodotti derivati</td>
+                        <td>8) Frutta a guscio e loro prodotti</td>
+                    </tr>
+                    <tr>
+                        <td>2) Crostacei e prodotti a base di crostacei</td>
+                        <td>9) Sedano e prodotti a base di sedano</td>
+                    </tr>
+                    <tr>
+                        <td>3) Uova e prodotti a base di uova</td>
+                        <td>10) Senape e prodotti a base di senape</td>
+                    </tr>
+                    <tr>
+                        <td>4) Pesce e prodotti a base di pesce</td>
+                        <td>11) Semi di sesamo e prodotti a base di sesamo</td>
+                    </tr>
+                    <tr>
+                        <td>5) Arachidi e prodotti a base di arachidi</td>
+                        <td>12) Solfiti in concentrazioni superiori a 10 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>6) Soia e prodotti a base di soia</td>
+                        <td>13) Lupini e prodotti a base di lupini</td>
+                    </tr>
+                    <tr>
+                        <td>7) Latte e prodotti a base di latte</td>
+                        <td>14) Molluschi e prodotti a base di molluschi</td>
+                    </tr>
+                </table>
+
+                <p class="allergen-footer-text">Un nostro Responsabile incaricato è a vostra disposizione per fornire
+                    ogni supporto o informazione</p>
+            </div>
         </div>
-
-        <div class="menu-grid">
-            <div class="menu-item" data-category="primi">
-                <img src="Immagini/Carbonara.png">
-                <div class="menu-item-content">
-                    <h3>Carbonara</h3>
-                    <p>Autentica carbonara romana con guanciale croccante, pecorino romano e uova fresche</p>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€13.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="primi">
-                <img src="Immagini/CacioePepe.png">
-                <div class="menu-item-content">
-                    <h3>Cacio e Pepe</h3>
-                    <p>L'intramontabile capolavoro della semplicità romana con pecorino romano DOP grattugiato al momento e pepe nero in grani tostato, legati in una crema perfetta.</p>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€9.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="primi">
-                <img src="Immagini/Gricia.jpg">
-                <div class="menu-item-content">
-                    <h3>Gricia</h3>
-                    <p>Il saggio preludio della tradizione romana con guanciale croccante, pecorino romano DOP e una generosa spolverata di pepe nero macinato fresco.</p>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€11.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="primi">
-                <img src="Immagini/Amatriciana.jpeg">
-                <div class="menu-item-content">
-                    <h3>Amatriciana</h3>
-                    <p>L'abbraccio intenso della cucina laziale con guanciale dorato, pomodoro San Marzano verace, pecorino romano e un pizzico di peperoncino.</p>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€12.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="primi">
-                <img src="Immagini/Ortolana.jpg">
-                <div class="menu-item-content">
-                    <h3>Ortolana</h3>
-                    <p>Una sinfonia di colori e sapori dell'orto con verdure di stagione saltate, basilico fresco e un filo d'olio extravergine d'oliva a crudo.</p>
-                    <p> Allergeni[1,3]</p>
-                    <div class="menu-price">€11.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="primi">
-                <img src="Immagini/Tricolore.jpeg">
-                <div class="menu-item-content">
-                    <h3>Tricolore</h3>
-                    <p>L'omaggio mediterraneo ai sapori d'Italia con pomodorini dolci, mozzarella di bufala filante e profumato basilico fresco.</p>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€11.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="secondi">
-                <img src="Immagini/pezz.jpeg">
-                <div class="menu-item-content">
-                    <h3>Pezzetti Pignata</h3>
-                    <p>Il comfort food salentino per eccellenza con teneri bocconcini di carne di cavallo cotti lentamente nella terracotta, immersi in un sugo ricco e speziato.</p>
-                    <p> Allergeni[1]</p>
-                    <div class="menu-price">€13.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="secondi">
-                <img src="Immagini/sals.jpg">
-                <div class="menu-item-content">
-                    <h3>Salsiccia Arrosto con Patate al Forno</h3>
-                    <p>Un classico intramontabile della domenica con salsiccia di puro suino nostrana ben rosolata, accompagnata da patate al forno dorate e profumate al rosmarino.</p>
-                    <p> Allergeni[]</p>
-                    <div class="menu-price">€10.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="secondi">
-                <img src="Immagini/salt.webp">
-                <div class="menu-item-content">
-                    <h3>Saltimbocca</h3>
-                    <p>Teneri medaglioni di vitello che 'saltano in bocca', impreziositi da sapida coppa o prosciutto crudo e foglioline di salvia fresca, sfumati al vino bianco.</p>
-                    <p> Allergeni[1,7]</p>
-                    <div class="menu-price">€13.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/Aperitivo.jpg">
-                <div class="menu-item-content">
-                    <h3>Aperitivo Rinforzato</h3>
-                    <p>Prosciutto Crudo, Capocollo, Salame Milano, Ventricina Piccante, Caciottina speziata, Mortadella, Pittole, Polpette, Panzerotti, Pitta di Patate.</p>
-                    <p> Allergeni[1,7]</p>
-                    <div class="menu-price">€16.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/Aperitivo.jpg">
-                <div class="menu-item-content">
-                    <h3>Tagliere di Salumi e Formaggi</h3>
-                    <p>Prosciutto Crudo, Salame Milano, Mortadella, Caciottina Speziata.</p>
-                    <p> Allergeni[1,7]</p>
-                    <div class="menu-price">€9.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/polpette.webp">
-                <div class="menu-item-content">
-                    <h3>Polpette 8pz </h3>
-                    <p>Salse a Scelta + €1.00 (Opzionale)</p>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€5.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/crocchetta.webp">
-                <div class="menu-item-content">
-                    <h3>Panzerotti di Patate e Menta 10pz</h3>
-                    <p> Allergeni[1,3,7]</p>
-                    <div class="menu-price">€5.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/focaccia.png">
-                <div class="menu-item-content">
-                    <h3>Focaccia del Giorno</h3>
-                    <p> Allergeni[1]</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/pittole.webp">
-                <div class="menu-item-content">
-                    <h3>Pittole Miste</h3>
-                    <p> Allergeni[1]</p>
-                    <div class="menu-price">€3.00</div>
-                </div>
-            </div>
-
-
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/acq.jpg">
-                <div class="menu-item-content">
-                    <h3>Acqua Naturale</h3>
-                    <p>Bottiglia 0.5l</p>
-                    <div class="menu-price">€1.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/acq.jpg">
-                <div class="menu-item-content">
-                    <h3>Acqua Frizzante</h3>
-                    <p>Bottiglia 0.5l</p>
-                    <div class="menu-price">€1.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/coca.jpg">
-                <div class="menu-item-content">
-                    <h3>Coca Cola</h3>
-                    <p>Lattina 330ml</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/cocaz.jpg">
-                <div class="menu-item-content">
-                    <h3>Coca-Cola Zero</h3>
-                    <p>Lattina 330ml</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/fanta.jpg">
-                <div class="menu-item-content">
-                    <h3>Fanta</h3>
-                    <p>Lattina 330ml</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/sprite.jpg">
-                <div class="menu-item-content">
-                    <h3>Sprite</h3>
-                    <p>Lattina 330ml</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/thel.jpg">
-                <div class="menu-item-content">
-                    <h3>Thè Limone</h3>
-                    <p>Lattina 330ml</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-category="bevande">
-                <img src="Immagini/thep.jpg">
-                <div class="menu-item-content">
-                    <h3>Thè Pesca</h3>
-                    <p>Lattina 330ml</p>
-                    <div class="menu-price">€2.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="birre">
-                <img src="Immagini/Ichnusa.jpg">
-                <div class="menu-item-content">
-                    <h3>Ichnusa</h3>
-                    <p></p>
-                    <div class="menu-price">€3.50</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="birre">
-                <img src="Immagini/Franziskaner.jpg">
-                <div class="menu-item-content">
-                    <h3>Franziskaner</h3>
-                    <p></p>
-                    <div class="menu-price">€4.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="birre">
-                <img src="Immagini/Menabrea.jpg">
-                <div class="menu-item-content">
-                    <h3>Menabrea Doppio Malto</h3>
-                    <p></p>
-                    <div class="menu-price">€4.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="birre">
-                <img src="Immagini/Menabrea.jpg">
-                <div class="menu-item-content">
-                    <h3>Menabrea Rossa</h3>
-                    <p></p>
-                    <div class="menu-price">€5.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="birre">
-                <img src="Immagini/peroni.jpg">
-                <div class="menu-item-content">
-                    <h3>Peroni (Senza Glutine)</h3>
-                    <p></p>
-                    <div class="menu-price">€3.50</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/aperol.jpg">
-                <div class="menu-item-content">
-                    <h3>Aperol Spritz</h3>
-                    <p></p>
-                    <div class="menu-price">€6.00</div>
-                </div>
-            </div>
-         
-
-         <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/campari.jpg">
-                <div class="menu-item-content">
-                    <h3>Campari Spritz</h3>
-                    <p></p>
-                    <div class="menu-price">€6.00</div>
-                </div>
-            </div>
-
-         <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/ginl.jpg">
-                <div class="menu-item-content">
-                    <h3>Gin Lemon</h3>
-                    <p></p>
-                    <div class="menu-price">€6.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/gint.jpg">
-                <div class="menu-item-content">
-                    <h3>Gin Tonic</h3>
-                    <p></p>
-                    <div class="menu-price">€6.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/vodkal.jpg">
-                <div class="menu-item-content">
-                    <h3>Vodka Lemon</h3>
-                    <p></p>
-                    <div class="menu-price">€6.00</div>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/vodkat.jpg">
-                <div class="menu-item-content">
-                    <h3>Vodka Tonic</h3>
-                    <p></p>
-                    <div class="menu-price">€6.00</div>
-                </div>
-            </div>
-        
-
-
-        </div>
-
-        
-          <!-- Allergeni -->
-        <div class="allergen-notice">
-            <p>Si avvisa la gentile clientela che negli alimenti e nelle bevande preparati e somministrati possono essere contenuti ingredienti o coadiuvanti considerati allergeni.</p>
-            <p>Elenco degli ingredienti allergenici utilizzati e presenti nell'allegato II del Reg. UE n. 1169/2001 – <strong>"Sostanze o prodotti che provocano allergie o intolleranze"</strong></p>
-
-            <table class="allergen-table">
-                <tr>
-                    <td>1) Cereali contenti glutine e prodotti derivati</td>
-                    <td>8) Frutta a guscio e loro prodotti</td>
-                </tr>
-                <tr>
-                    <td>2) Crostacei e prodotti a base di crostacei</td>
-                    <td>9) Sedano e prodotti a base di sedano</td>
-                </tr>
-                <tr>
-                    <td>3) Uova e prodotti a base di uova</td>
-                    <td>10) Senape e prodotti a base di senape</td>
-                </tr>
-                <tr>
-                    <td>4) Pesce e prodotti a base di pesce</td>
-                    <td>11) Semi di sesamo e prodotti a base di sesamo</td>
-                </tr>
-                <tr>
-                    <td>5) Arachidi e prodotti a base di arachidi</td>
-                    <td>12) Solfiti in concentrazioni superiori a 10 mg/kg</td>
-                </tr>
-                <tr>
-                    <td>6) Soia e prodotti a base di soia</td>
-                    <td>13) Lupini e prodotti a base di lupini</td>
-                </tr>
-                <tr>
-                    <td>7) Latte e prodotti a base di latte</td>
-                    <td>14) Molluschi e prodotti a base di molluschi</td>
-                </tr>
-            </table>
-
-            <p class="allergen-footer-text">Un nostro Responsabile incaricato è a vostra disposizione per fornire ogni supporto o informazione</p>
-        </div>
-
     </section>
 
-    
-
-    
-
-    Contatti
-
-    <section id="contact">
-        <h2   class="section-title">Contattaci</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p> Piazza Mercato 16, Maglie</p>
-                </div>
-                <div>
-                    <i class="fas fa-phone"></i>
-                    <p>+39 352 043 3942</p>
-                </div>
-                
-                <div>
-                    <i class="fas fa-clock"></i>
-                    <p>Martedì-Domenica: 12:30-14:30 | 19:00-24:00<br>Lunedì: Chiuso</p>
-                </div>
-                 
-                <div class="social-links" >
-                    <a href="https://www.instagram.com/ilprimo_fastbistrot?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i style="Color:black "  class="fab fa-instagram"></i></a>
-                    <p>ilprimo_fastbistrot</p>
-                </div>
+    <!-- Contact Section -->
+    <section id="contact" class="section section-light">
+        <div class="wrap">
+            <div class="section-head">
+                <p class="eyebrow">Dove Siamo</p>
+                <h2 class="section-heading">Contattaci</h2>
+                <svg class="icon-mark divider-mark">
+                    <use href="#fork-twirl"></use>
+                </svg>
             </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div>
+                        <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <p>Piazza Mercato 16, Maglie</p>
+                    </div>
+                    <div>
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <p>+39 352 043 3942</p>
+                    </div>
+                    <div>
+                        <span class="contact-icon"><i class="fas fa-clock"></i></span>
+                        <p>Martedì–Domenica: 12:30–14:30 | 19:00–24:00<br>Lunedì: Chiuso</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/ilprimo_fastbistrot?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            aria-label="Instagram di Il Primo Fast Bistrot"><i class="fab fa-instagram"></i></a>
+                        <p>ilprimo_fastbistrot</p>
+                    </div>
+                </div>
 
-            
-            
-            <div class="map">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190.68524501254407!2d18.29819521583001!3d40.12080752470304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1344162549491cd1%3A0xe691bcce6712bd8c!2sP.za%20Mercato%2C%2016%2C%2073024%20Maglie%20LE!5e0!3m2!1sit!2sit!4v1783279718348!5m2!1sit!2sit"
-                    
-                    width="100%" 
-                    height="100%" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
+                <div class="map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190.68524501254407!2d18.29819521583001!3d40.12080752470304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1344162549491cd1%3A0xe691bcce6712bd8c!2sP.za%20Mercato%2C%2016%2C%2073024%20Maglie%20LE!5e0!3m2!1sit!2sit!4v1783279718348!5m2!1sit!2sit"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        title="Mappa: Il Primo Fast Bistrot, Piazza Mercato 16, Maglie">
+                    </iframe>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-           
-    
     <footer>
         <div class="footer-content">
-            <div class="footer-logo" style = "font-size: 40px">Il Primo</div>
-            <p style="font-family: 'Caroline'; color:#000; font-size: 60px;" >Fast Bistrot</p>
-            
+            <svg class="icon-mark footer-mark">
+                <use href="#fork-twirl"></use>
+            </svg>
+            <div class="footer-logo">Il Primo</div>
+            <p class="footer-script">Fast Bistrot</p>
+
             <div class="footer-links">
                 <a href="#home">Home</a>
                 <a href="#about">Chi Siamo</a>
                 <a href="#menu">Menu</a>
                 <a href="#contact">Contatti</a>
             </div>
-            
-        
-            
+
             <div class="copyright">
-                <p>&copy; 2026  Il Primo SNC di Carignani & Toma - Tutti i diritti riservati | P.IVA 05482290755</p>
+                <p>&copy; 2026 Il Primo SNC di Carignani &amp; Toma — Tutti i diritti riservati | P.IVA 05482290755</p>
             </div>
         </div>
     </footer>
 
     <!-- Cookie Banner -->
-<div class="cookie-banner" id="cookieBanner">
-    <p>
-        Questo sito utilizza cookie tecnici e di terze parti.
-        Continuando la navigazione accetti l'utilizzo dei cookie. 
-    </p>
-    <div class="cookie-banner-buttons">
-        <button class="cookie-btn cookie-btn-decline" id="cookieAccept">Ho Capito</button>
+    <div class="cookie-banner" id="cookieBanner">
+        <p>
+            Questo sito utilizza cookie tecnici e di terze parti.
+            Continuando la navigazione accetti l'utilizzo dei cookie.
+        </p>
+        <div class="cookie-banner-buttons">
+            <button class="cookie-btn" id="cookieAccept">Ho Capito</button>
+        </div>
     </div>
-</div>
 
     <script>
         // Menu Category Filter
         document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const category = this.dataset.category;
                 document.querySelectorAll('.menu-item').forEach(item => {
                     if (category === 'all' || item.dataset.category === category) {
@@ -1128,54 +1501,51 @@ body {
             });
         });
 
-    
-
-        // Smooth Scrolling
+        // Smooth Scrolling + close mobile nav on link click
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
+                navLinks.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
             });
         });
 
-       
         // Navbar scroll effect
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.15)';
-            } else {
-                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            }
+            nav.style.boxShadow = window.scrollY > 60
+                ? '0 4px 24px rgba(0,0,0,0.35)'
+                : 'none';
+        });
+
+        // Mobile nav toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        navToggle.addEventListener('click', function () {
+            const isOpen = navLinks.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', String(isOpen));
         });
 
         // Cookie Banner Logic
-(function() {
-    const banner = document.getElementById('cookieBanner');
-    const acceptBtn = document.getElementById('cookieAccept');
-    const declineBtn = document.getElementById('cookieDecline');
-    const consent = localStorage.getItem('cookieConsent');
+        (function () {
+            const banner = document.getElementById('cookieBanner');
+            const acceptBtn = document.getElementById('cookieAccept');
+            const consent = localStorage.getItem('cookieConsent');
 
-    if (!consent) {
-        setTimeout(() => banner.classList.add('show'), 500);
-    }
+            if (!consent) {
+                setTimeout(() => banner.classList.add('show'), 500);
+            }
 
-    acceptBtn.addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        banner.classList.remove('show');
-    });
-
-    declineBtn.addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'declined');
-        banner.classList.remove('show');
-    });
-})();
+            acceptBtn.addEventListener('click', function () {
+                localStorage.setItem('cookieConsent', 'accepted');
+                banner.classList.remove('show');
+            });
+        })();
     </script>
 </body>
+
 </html>
