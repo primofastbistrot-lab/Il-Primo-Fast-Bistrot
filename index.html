@@ -7,8 +7,12 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#a89808">
     <title>Il Primo - FastBistrot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
 
        
@@ -31,16 +35,34 @@ body {
 
         :root {
             --primary-color: #a89808;
+            --primary-dark: #8c7f07;
             --secondary-color: rgba(255, 255, 255, 0.575);
             --text-dark: #ffffff;
             --text-light: #ffffff;
             --accent-gold: #d4af37;
+            --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+            --font-body: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition-fast: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --radius: 10px;
+            --radius-sm: 5px;
+            --shadow-sm: 0 3px 10px rgba(0,0,0,0.12);
+            --shadow-md: 0 10px 25px rgba(0,0,0,0.2);
+            --shadow-lg: 0 15px 32px rgba(0,0,0,0.26);
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-body);
             line-height: 1.6;
             color: var(--text-dark);
+        }
+
+        #home, #about, #menu, #contact {
+            scroll-margin-top: 88px;
         }
 
         /* Navigation */
@@ -51,6 +73,14 @@ body {
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: background var(--transition-fast), box-shadow var(--transition-fast), padding var(--transition-fast);
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.25);
         }
 
         .nav-container {
@@ -60,13 +90,20 @@ body {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: padding var(--transition-fast);
+        }
+
+        nav.scrolled .nav-container {
+            padding: 0.7rem 2rem;
         }
 
         .logo {
+            font-family: var(--font-display);
             font-size: 1.8rem;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
@@ -76,32 +113,109 @@ body {
         }
 
         .nav-links a {
+            position: relative;
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 500;
             transition: color 0.3s;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--primary-color);
         }
 
+        .nav-links a:hover::after,
+        .nav-links a.active-link::after {
+            width: 100%;
+        }
+
+        .nav-links a.active-link {
+            color: var(--primary-color);
+        }
+
         .btn-reserve {
             background: var(--primary-color);
-            color: white;
+            color: #000;
             padding: 0.7rem 1.5rem;
-            border-radius: 5px;
+            border-radius: var(--radius-sm);
             text-decoration: none;
             font-weight: bold;
-            transition: background 0.3s;
+            letter-spacing: 0.3px;
+            transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .btn-reserve:hover {
             background: #000000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 32px;
+            height: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 900;
+        }
+
+        .nav-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* Hero Section */
         .hero {
+            position: relative;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('Immagini/Sfondo.png');
             background-size: cover;
             background-position: center;
@@ -112,10 +226,12 @@ body {
             text-align: center;
             color: white;
             margin-top: 60px;
+            overflow: hidden;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-family: var(--font-display);
+            font-size: clamp(2.3rem, 6vw, 4rem);
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
@@ -125,20 +241,55 @@ body {
             margin-bottom: 2rem;
         }
 
+        .hero-content > * {
+            opacity: 0;
+            animation: fadeInUp 0.9s ease forwards;
+        }
+
+        .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+        .hero-content > *:nth-child(2) { animation-delay: 0.3s; }
+        .hero-content > *:nth-child(3) { animation-delay: 0.5s; }
+        .hero-content > *:nth-child(4) { animation-delay: 0.7s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hero-btn {
             background: var(--primary-color);
-            color: rgb(255, 255, 255);
+            color: #000;
             padding: 1rem 2.5rem;
-            border-radius: 5px;
+            border-radius: var(--radius-sm);
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: bold;
-            transition: transform 0.3s;
+            letter-spacing: 0.3px;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
             display: inline-block;
         }
 
         .hero-btn:hover {
+            background: var(--primary-dark);
             transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 1.4rem;
+            opacity: 0.85;
+            animation: bounce 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 10px); }
         }
 
         /* Sections */
@@ -150,7 +301,8 @@ body {
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-family: var(--font-display);
+            font-size: clamp(1.9rem, 4vw, 2.5rem);
             margin-bottom: 3rem;           /* Impostazioni Mini Titoli */
             color:  black;                 
         }
@@ -162,6 +314,18 @@ body {
             height: 3px;
             background: var(--primary-color);
             margin: 1rem auto;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* About Section */
@@ -179,9 +343,15 @@ body {
         }
 
         .about-image {
-            border-radius: 10px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.185);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .about-image:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .about-image img {
@@ -193,6 +363,42 @@ body {
         /* Menu Section */
         .menu-section {
             background: var(--secondary-color);
+        }
+
+        .service-notice {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            padding: 1.2rem 1.6rem;
+            background: rgba(168, 152, 8, 0.12);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .service-notice i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .service-notice p {
+            color: #000000;
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+
+        .service-notice strong {
+            color: #000000;
+        }
+
+        @media (max-width: 600px) {
+            .service-notice {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
         .menu-categories {
@@ -208,17 +414,20 @@ body {
             border: 2px solid var(--primary-color);
             background: transparent;
             color: var(--primary-color);
-            border-radius: 5px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.3px;
             transition: all 0.3s;
         }
 
         .category-btn.active,
         .category-btn:hover {
             background: var(--primary-color);
-            color: white;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
 
         .menu-grid {
@@ -229,20 +438,31 @@ body {
 
         .menu-item {
             background: rgb(0, 0, 0);
-            border-radius: 10px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, opacity 0.35s ease, box-shadow 0.3s;
         }
 
         .menu-item:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .menu-item.menu-hide {
+            opacity: 0;
+            transform: scale(0.92);
         }
 
         .menu-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.08);
         }
 
         .menu-item-content {
@@ -322,15 +542,16 @@ body {
             background: var(--primary-color);
             color: rgb(0, 0, 0);
             border: none;
-            border-radius: 5px;
+            border-radius: var(--radius-sm);
             font-size: 1.1rem;
             font-weight: bold;
+            letter-spacing: 0.3px;
             cursor: pointer;
             transition: background 0.3s;
         }
 
         .submit-btn:hover {
-            background: #a00d25;
+            background: var(--primary-dark);
         }
 
         /* Gallery Section */
@@ -405,7 +626,7 @@ body {
         }
 
         .map {
-            border-radius: 10px;
+            border-radius: var(--radius);
             overflow: hidden;
             height: 400px;
         }
@@ -424,6 +645,7 @@ body {
         }
 
         .footer-logo {
+            font-family: var(--font-display);
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 1rem;
@@ -455,14 +677,97 @@ body {
             color: #888;
         }
 
+        /* Floating action buttons */
+        .back-to-top,
+        .floating-instagram {
+            position: fixed;
+            bottom: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: #000;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            transition: bottom 0.3s ease, opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+            z-index: 1100;
+        }
+
+        .back-to-top {
+            left: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .floating-instagram {
+            right: 2rem;
+            animation: pulseRing 2.4s infinite;
+        }
+
+        @keyframes pulseRing {
+            0% { box-shadow: 0 6px 18px rgba(0,0,0,0.3), 0 0 0 0 rgba(168,152,8,0.5); }
+            70% { box-shadow: 0 6px 18px rgba(0,0,0,0.3), 0 0 0 14px rgba(168,152,8,0); }
+            100% { box-shadow: 0 6px 18px rgba(0,0,0,0.3), 0 0 0 0 rgba(168,152,8,0); }
+        }
+
+        .back-to-top:hover,
+        .floating-instagram:hover {
+            transform: translateY(-4px);
+            background: var(--primary-dark);
+        }
+
+        body.banner-active .back-to-top,
+        body.banner-active .floating-instagram {
+            bottom: 6.5rem;
+        }
+
         /* Responsive */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: min(320px, 80%);
+                height: 100vh;
+                background: #000;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right 0.4s ease;
+                box-shadow: -5px 0 25px rgba(0,0,0,0.4);
             }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .hero-content h1[style*="top"],
+            .hero-content p[style*="top"] {
+                top: -50px !important;
             }
 
             .about-content,
@@ -474,6 +779,44 @@ body {
                 
                 font-size: 2rem;
             }
+
+            .back-to-top,
+            .floating-instagram {
+                width: 46px;
+                height: 46px;
+                bottom: 1.2rem;
+                font-size: 1.05rem;
+            }
+
+            .back-to-top { left: 1.2rem; }
+            .floating-instagram { right: 1.2rem; }
+
+            body.banner-active .back-to-top,
+            body.banner-active .floating-instagram {
+                bottom: 8rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-content > * {
+                opacity: 1 !important;
+            }
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 3px;
         }
 
         /* Cookie Banner */
@@ -521,7 +864,7 @@ body {
 
 .cookie-btn {
     padding: 0.6rem 1.4rem;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     border: 2px solid var(--primary-color);
     font-weight: bold;
     cursor: pointer;
@@ -565,8 +908,9 @@ body {
     margin-top: 3rem;
     padding: 2rem;
     background: rgb(0, 0, 0);
-    border-radius: 10px;
+    border-radius: var(--radius);
     border: 1px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .allergen-notice p {
@@ -615,8 +959,8 @@ body {
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo">Il Primo</a>
-            <ul class="nav-links">
+            <a href="#home" class="logo">Il Primo</a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">Chi Siamo</a></li>
                 <li><a href="#menu">Menu</a></li>
@@ -624,17 +968,22 @@ body {
                 <li><a href="#contact">Contatti</a></li>
             </ul>
             <a href="#menu" class="btn-reserve">Ordina Ora</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="navLinks">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <!-- Hero Section -->
     <div class="hero" id="home">
         <div class="hero-content">
             <h1 style= "  position: relative; top: -150px; left: 0;">Benvenuti da:</h1> 
             <h1 style= "  position: relative; top: -150px; left: 0;">Il Primo</h1>
-            <p style= "font-family: 'Caroline' ;position: relative; top: -150px; left: 0; font-size: 60px;">Fast Bistrot</p>                             
+            <p style= "font-family: 'Caroline' ;position: relative; top: -150px; left: 0; font-size: clamp(1.9rem, 8vw, 60px);">Fast Bistrot</p>                             
             <a href="#menu" class="hero-btn">Ordina il tuo Primo</a>
         </div>
+        <a href="#about" class="scroll-cue" aria-label="Scorri per saperne di più"><i class="fas fa-chevron-down"></i></a>
     </div>
 
     <!-- About Section -->
@@ -645,7 +994,7 @@ body {
                 <p style = "color: black; font-family:Georgia, 'Times New Roman', Times, serif ; font-size: 25px"> Il Primo, non un ristorante e non un bistrot ma qualcosa di più informale, dove l'amore per la cucina ci ha portato a lanciarci in quest'avventura dopo molti anni passati a fare esperienza, quell'esperienza che adesso vogliamo mettere a vostra disposizione per farvi gustare ricette tipiche della nostra e anche delle altre regioni italiane, con un attenzione particolare al seguire la stagionalità e la qualità dei prodotti che offriamo, non vi resta altro che accomodarvi e buon appetito</p>
             </div>
             <div class="about-image">
-                <img src="Immagini/Logo.png">                 
+                <img src="Immagini/Logo.png" alt="Logo Il Primo Fast Bistrot" loading="lazy">                 
             </div>
         </div>
 
@@ -660,7 +1009,12 @@ body {
     <!-- Menu Section -->
     <section id="menu" class="menu-section">
         <h2 class="section-title">Il Nostro Menu</h2>
-        
+
+        <div class="service-notice">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            <p><strong>Attenzione:</strong> non effettuiamo servizio al tavolo. Per ordinare è necessario recarsi alla cassa, effettuare l'ordine e ritirare in seguito al bancone.</p>
+        </div>
+
         <div class="menu-categories">
             <button class="category-btn active" data-category="all">Tutti</button>
             <button class="category-btn" data-category="primi">Primi Piatti</button>
@@ -673,7 +1027,7 @@ body {
 
         <div class="menu-grid">
             <div class="menu-item" data-category="primi">
-                <img src="Immagini/Carbonara.png">
+                <img src="Immagini/Carbonara.png" alt="Carbonara" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Carbonara</h3>
                     <p>Autentica carbonara romana con guanciale croccante, pecorino romano e uova fresche</p>
@@ -683,7 +1037,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="primi">
-                <img src="Immagini/CacioePepe.png">
+                <img src="Immagini/CacioePepe.png" alt="Cacio e Pepe" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Cacio e Pepe</h3>
                     <p>L'intramontabile capolavoro della semplicità romana con pecorino romano DOP grattugiato al momento e pepe nero in grani tostato, legati in una crema perfetta.</p>
@@ -693,7 +1047,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="primi">
-                <img src="Immagini/Gricia.jpg">
+                <img src="Immagini/Gricia.png" alt="Gricia" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Gricia</h3>
                     <p>Il saggio preludio della tradizione romana con guanciale croccante, pecorino romano DOP e una generosa spolverata di pepe nero macinato fresco.</p>
@@ -703,7 +1057,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="primi">
-                <img src="Immagini/Amatriciana.jpeg">
+                <img src="Immagini/Amatriciana.jpeg" alt="Amatriciana" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Amatriciana</h3>
                     <p>L'abbraccio intenso della cucina laziale con guanciale dorato, pomodoro San Marzano verace, pecorino romano e un pizzico di peperoncino.</p>
@@ -713,7 +1067,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="primi">
-                <img src="Immagini/Ortolana.jpg">
+                <img src="Immagini/Ortolana.jpg" alt="Ortolana" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Ortolana</h3>
                     <p>Una sinfonia di colori e sapori dell'orto con verdure di stagione saltate, basilico fresco e un filo d'olio extravergine d'oliva a crudo.</p>
@@ -723,7 +1077,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="primi">
-                <img src="Immagini/Tricolore.jpeg">
+                <img src="Immagini/Tricolore.jpeg" alt="Tricolore" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Tricolore</h3>
                     <p>L'omaggio mediterraneo ai sapori d'Italia con pomodorini dolci, mozzarella di bufala filante e profumato basilico fresco.</p>
@@ -733,7 +1087,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="secondi">
-                <img src="Immagini/pezz.jpeg">
+                <img src="Immagini/pezz.jpeg" alt="Pezzetti Pignata" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Pezzetti Pignata</h3>
                     <p>Il comfort food salentino per eccellenza con teneri bocconcini di carne di cavallo cotti lentamente nella terracotta, immersi in un sugo ricco e speziato.</p>
@@ -743,7 +1097,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="secondi">
-                <img src="Immagini/sals.jpg">
+                <img src="Immagini/sals.jpg" alt="Salsiccia Arrosto con Patate al Forno" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Salsiccia Arrosto con Patate al Forno</h3>
                     <p>Un classico intramontabile della domenica con salsiccia di puro suino nostrana ben rosolata, accompagnata da patate al forno dorate e profumate al rosmarino.</p>
@@ -753,7 +1107,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="secondi">
-                <img src="Immagini/salt.webp">
+                <img src="Immagini/Salt.png" alt="Saltimbocca" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Saltimbocca</h3>
                     <p>Teneri medaglioni di vitello che 'saltano in bocca', impreziositi da sapida coppa o prosciutto crudo e foglioline di salvia fresca, sfumati al vino bianco.</p>
@@ -763,7 +1117,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/Aperitivo.jpg">
+                <img src="Immagini/Aperitivo.jpg" alt="Aperitivo Rinforzato" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Aperitivo Rinforzato</h3>
                     <p>Prosciutto Crudo, Capocollo, Salame Milano, Ventricina Piccante, Caciottina speziata, Mortadella, Pittole, Polpette, Panzerotti, Pitta di Patate.</p>
@@ -773,7 +1127,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/Aperitivo.jpg">
+                <img src="Immagini/Aperitivo.jpg" alt="Tagliere di Salumi e Formaggi" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Tagliere di Salumi e Formaggi</h3>
                     <p>Prosciutto Crudo, Salame Milano, Mortadella, Caciottina Speziata.</p>
@@ -783,7 +1137,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/polpette.webp">
+                <img src="Immagini/polpette.webp" alt="Polpette" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Polpette 8pz </h3>
                     <p>Salse a Scelta + €1.00 (Opzionale)</p>
@@ -793,7 +1147,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/crocchetta.webp">
+                <img src="Immagini/crocchetta.webp" alt="Panzerotti di Patate e Menta" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Panzerotti di Patate e Menta 10pz</h3>
                     <p> Allergeni[1,3,7]</p>
@@ -802,7 +1156,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/focaccia.png">
+                <img src="Immagini/focaccia.png" alt="Focaccia del Giorno" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Focaccia del Giorno</h3>
                     <p> Allergeni[1]</p>
@@ -811,7 +1165,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="sfizierie">
-                <img src="Immagini/pittole.webp">
+                <img src="Immagini/pittole.webp" alt="Pittole Miste" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Pittole Miste</h3>
                     <p> Allergeni[1]</p>
@@ -821,7 +1175,7 @@ body {
 
 
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/acq.jpg">
+                <img src="Immagini/acq.jpg" alt="Acqua Naturale" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Acqua Naturale</h3>
                     <p>Bottiglia 0.5l</p>
@@ -830,7 +1184,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/acq.jpg">
+                <img src="Immagini/acq.jpg" alt="Acqua Frizzante" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Acqua Frizzante</h3>
                     <p>Bottiglia 0.5l</p>
@@ -838,7 +1192,7 @@ body {
                 </div>
             </div>
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/coca.jpg">
+                <img src="Immagini/coca.jpg" alt="Coca Cola" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Coca Cola</h3>
                     <p>Lattina 330ml</p>
@@ -846,7 +1200,7 @@ body {
                 </div>
             </div>
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/cocaz.jpg">
+                <img src="Immagini/cocaz.jpg" alt="Coca-Cola Zero" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Coca-Cola Zero</h3>
                     <p>Lattina 330ml</p>
@@ -854,7 +1208,7 @@ body {
                 </div>
             </div>
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/fanta.jpg">
+                <img src="Immagini/fanta.jpg" alt="Fanta" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Fanta</h3>
                     <p>Lattina 330ml</p>
@@ -862,7 +1216,7 @@ body {
                 </div>
             </div>
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/sprite.jpg">
+                <img src="Immagini/sprite.jpg" alt="Sprite" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Sprite</h3>
                     <p>Lattina 330ml</p>
@@ -870,7 +1224,7 @@ body {
                 </div>
             </div>
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/thel.jpg">
+                <img src="Immagini/thel.jpg" alt="Thè Limone" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Thè Limone</h3>
                     <p>Lattina 330ml</p>
@@ -878,7 +1232,7 @@ body {
                 </div>
             </div>
             <div class="menu-item" data-category="bevande">
-                <img src="Immagini/thep.jpg">
+                <img src="Immagini/thep.jpg" alt="Thè Pesca" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Thè Pesca</h3>
                     <p>Lattina 330ml</p>
@@ -887,7 +1241,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="birre">
-                <img src="Immagini/Ichnusa.jpg">
+                <img src="Immagini/Ichnusa.jpg" alt="Ichnusa" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Ichnusa</h3>
                     <p></p>
@@ -896,7 +1250,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="birre">
-                <img src="Immagini/Franziskaner.jpg">
+                <img src="Immagini/Franziskaner.jpg" alt="Franziskaner" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Franziskaner</h3>
                     <p></p>
@@ -905,7 +1259,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="birre">
-                <img src="Immagini/Menabrea.jpg">
+                <img src="Immagini/Menabrea.jpg" alt="Menabrea Doppio Malto" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Menabrea Doppio Malto</h3>
                     <p></p>
@@ -914,7 +1268,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="birre">
-                <img src="Immagini/Menabrea.jpg">
+                <img src="Immagini/Menabrea.jpg" alt="Menabrea Rossa" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Menabrea Rossa</h3>
                     <p></p>
@@ -923,7 +1277,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="birre">
-                <img src="Immagini/peroni.jpg">
+                <img src="Immagini/peroni.jpg" alt="Peroni Senza Glutine" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Peroni (Senza Glutine)</h3>
                     <p></p>
@@ -932,7 +1286,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/aperol.jpg">
+                <img src="Immagini/aperol.jpg" alt="Aperol Spritz" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Aperol Spritz</h3>
                     <p></p>
@@ -942,7 +1296,7 @@ body {
          
 
          <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/campari.jpg">
+                <img src="Immagini/campari.jpg" alt="Campari Spritz" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Campari Spritz</h3>
                     <p></p>
@@ -951,7 +1305,7 @@ body {
             </div>
 
          <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/ginl.jpg">
+                <img src="Immagini/ginl.jpg" alt="Gin Lemon" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Gin Lemon</h3>
                     <p></p>
@@ -960,7 +1314,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/gint.jpg">
+                <img src="Immagini/gint.jpg" alt="Gin Tonic" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Gin Tonic</h3>
                     <p></p>
@@ -969,7 +1323,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/vodkal.jpg">
+                <img src="Immagini/vodkal.jpg" alt="Vodka Lemon" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Vodka Lemon</h3>
                     <p></p>
@@ -978,7 +1332,7 @@ body {
             </div>
 
             <div class="menu-item" data-category="cocktail">
-                <img src="Immagini/vodkat.jpg">
+                <img src="Immagini/vodkat.jpg" alt="Vodka Tonic" loading="lazy">
                 <div class="menu-item-content">
                     <h3>Vodka Tonic</h3>
                     <p></p>
@@ -1031,12 +1385,6 @@ body {
         </div>
 
     </section>
-
-    
-
-    
-
-    Contatti
 
     <section id="contact">
         <h2   class="section-title">Contattaci</h2>
@@ -1101,6 +1449,14 @@ body {
         </div>
     </footer>
 
+    <!-- Floating action buttons -->
+    <button id="backToTop" class="back-to-top" aria-label="Torna in cima alla pagina">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <a href="https://www.instagram.com/ilprimo_fastbistrot?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="floating-instagram" aria-label="Seguici su Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+
     <!-- Cookie Banner -->
 <div class="cookie-banner" id="cookieBanner">
     <p>
@@ -1113,31 +1469,76 @@ body {
 </div>
 
     <script>
-        // Menu Category Filter
+        // Menu Category Filter (with animated transition)
+        const menuItems = document.querySelectorAll('.menu-item');
+
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const category = this.dataset.category;
-                document.querySelectorAll('.menu-item').forEach(item => {
-                    if (category === 'all' || item.dataset.category === category) {
+                menuItems.forEach(item => {
+                    const shouldShow = category === 'all' || item.dataset.category === category;
+
+                    if (shouldShow) {
                         item.style.display = 'block';
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => item.classList.remove('menu-hide'));
+                        });
                     } else {
-                        item.style.display = 'none';
+                        item.classList.add('menu-hide');
+                        const onEnd = (e) => {
+                            if (e.propertyName === 'opacity' && item.classList.contains('menu-hide')) {
+                                item.style.display = 'none';
+                                item.removeEventListener('transitionend', onEnd);
+                            }
+                        };
+                        item.addEventListener('transitionend', onEnd);
                     }
                 });
             });
         });
 
-    
+        // Mobile navigation
+        const navToggle = document.getElementById('navToggle');
+        const navLinksEl = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
 
-        // Smooth Scrolling
+        function closeMenu() {
+            navToggle.classList.remove('active');
+            navLinksEl.classList.remove('active');
+            navOverlay.classList.remove('show');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        function openMenu() {
+            navToggle.classList.add('active');
+            navLinksEl.classList.add('active');
+            navOverlay.classList.add('show');
+            navToggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+
+        navToggle.addEventListener('click', () => {
+            navLinksEl.classList.contains('active') ? closeMenu() : openMenu();
+        });
+
+        navOverlay.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // Smooth Scrolling (also closes the mobile menu)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
                 if (target) {
+                    e.preventDefault();
+                    closeMenu();
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
@@ -1146,38 +1547,73 @@ body {
             });
         });
 
-       
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.15)';
-            } else {
-                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            }
+        // Navbar scroll effect + back-to-top visibility
+        const navEl = document.querySelector('nav');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            navEl.classList.toggle('scrolled', window.scrollY > 60);
+            backToTopBtn.classList.toggle('show', window.scrollY > 500);
+        }, { passive: true });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // Scroll reveal animations
+        const revealSelectors = '.about-content, .menu-item, .allergen-notice, .contact-info > div, .map, .section-title';
+        const revealTargets = document.querySelectorAll(revealSelectors);
+
+        revealTargets.forEach((el, i) => {
+            el.classList.add('reveal');
+            el.style.transitionDelay = `${(i % 6) * 0.08}s`;
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealTargets.forEach(el => revealObserver.observe(el));
+
+        // Highlight active nav link based on section in view
+        const sections = document.querySelectorAll('section[id], .hero[id]');
+        const navAnchors = document.querySelectorAll('.nav-links a');
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navAnchors.forEach(a => {
+                        a.classList.toggle('active-link', a.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { threshold: 0.5, rootMargin: '-80px 0px -40% 0px' });
+
+        sections.forEach(sec => sectionObserver.observe(sec));
+
         // Cookie Banner Logic
-(function() {
-    const banner = document.getElementById('cookieBanner');
-    const acceptBtn = document.getElementById('cookieAccept');
-    const declineBtn = document.getElementById('cookieDecline');
-    const consent = localStorage.getItem('cookieConsent');
+        (function() {
+            const banner = document.getElementById('cookieBanner');
+            const acceptBtn = document.getElementById('cookieAccept');
+            const consent = localStorage.getItem('cookieConsent');
 
-    if (!consent) {
-        setTimeout(() => banner.classList.add('show'), 500);
-    }
+            if (!consent) {
+                document.body.classList.add('banner-active');
+                setTimeout(() => banner.classList.add('show'), 500);
+            }
 
-    acceptBtn.addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        banner.classList.remove('show');
-    });
-
-    declineBtn.addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'declined');
-        banner.classList.remove('show');
-    });
-})();
+            acceptBtn.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                banner.classList.remove('show');
+                document.body.classList.remove('banner-active');
+            });
+        })();
     </script>
 </body>
 </html>
